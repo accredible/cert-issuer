@@ -25,7 +25,7 @@ def issue():
     txn_id = cert_issuer.issue_certificates.issue(config, certificate_batch_handler, transaction_handler)
     response = {
         "txn_id": txn_id,
-        "proofs": certificate_batch_handler.proof
+        "receipts": certificate_batch_handler.proof
     }
     return json.dumps(response)
 
