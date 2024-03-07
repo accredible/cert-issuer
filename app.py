@@ -22,8 +22,12 @@ def issue():
     certificate_batch_handler, transaction_handler, connector = \
             ethereum.instantiate_blockchain_handlers(config, False)
     certificate_batch_handler.set_certificates_in_batch(request.json)
-    cert_issuer.issue_certificates.issue(config, certificate_batch_handler, transaction_handler)
-    return json.dumps(certificate_batch_handler.proof)
+    txn_id = cert_issuer.issue_certificates.issue(config, certificate_batch_handler, transaction_handler)
+    response = {
+        "txn_id": txn_id,
+        "proofs": certificate_batch_handler.proof
+    }
+    return json.dumps(response)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001)
