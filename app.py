@@ -19,6 +19,10 @@ def get_config():
 def home():
     return 'Certificate Issuance Service is running.'
 
+@app.route('/hc')
+def aws_healthcheck():
+    return 'OK'
+
 @app.route('/cert_issuer/api/v1.0/issue', methods=['POST'])
 def issue():
     config = get_config()
