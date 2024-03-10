@@ -1,0 +1,27 @@
+FROM python:3.7
+
+WORKDIR /cert-issuer
+
+COPY conf.ini /etc/cert-issuer/conf.ini
+COPY pk_issuer.txt ./pk_issuer.txt
+COPY . .
+
+RUN apt update && apt install -y nginx \
+&& python -m ensurepip \
+&& pip install --upgrade pip \
+    setuptools \
+    Cython \
+    wheel \
+    uwsgi \
+    flask \
+&& python setup.py experimental --blockchain=ethereum
+
+# Setup Nginx
+ARG ENV=dev
+COPY nginx_conf /etc/nginx/sites-available/cert_issuer
+RUN ln -s /etc/nginx/sites-available/cert_issuer /etc/nginx/sites-enabled/
+RUN chmod +x ./setup_nginx.sh && ./setup_nginx.sh
+
+EXPOSE 80
+
+CMD nginx && uwsgi --ini wsgi.ini
