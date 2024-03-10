@@ -7,10 +7,14 @@
 1. Copy `conf_ethtest.ini` to a new `conf.ini`, and fill the missing values.
 2. Create `pk_issuer.txt` and add the wallet private key to it `0x...`.
 3. Build the docker image
-    - `docker build -t accredible/cert-issuer:latest -f Dockerfile.accredible .`
+    - `docker build -t blockcerts-local -f Dockerfile.accredible .`
 4. Run the docker container, hosting the app on port 8080
     - `docker run -p 8080:80 -d accredible/cert-issuer:latest`
 5. Generate test coins for your wallet https://sepolia-faucet.pk910.de
+
+### Deployment
+- Deployment images must be built with APP_ENV ARG `--build-arg APP_ENV=dev|production`
+- `docker build -t blockcerts-dev --build-arg APP_ENV=dev -f Dockerfile.accredible .`
 
 
 # cert-issuer
