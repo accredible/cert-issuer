@@ -1,8 +1,8 @@
 import logging
 import time
+from abc import abstractmethod
 
 import requests
-import web3
 from web3 import Web3, HTTPProvider
 
 try:
@@ -18,6 +18,14 @@ from cert_issuer.errors import BroadcastError
 
 BROADCAST_RETRY_INTERVAL = 30
 MAX_BROADCAST_ATTEMPTS = 3
+
+
+class MockServiceProviderConnector(ServiceProviderConnector):
+    def get_balance(self, address):
+        pass
+
+    def broadcast_tx(self, tx):
+        pass
 
 
 class EthereumServiceProviderConnector(ServiceProviderConnector):

@@ -3,8 +3,8 @@ import os
 
 from cert_core import UnknownChainError
 
-from cert_issuer.certificate_handlers import CertificateBatchHandler, CertificateV3Handler
-from cert_issuer.blockchain_handlers.ethereum.connectors import EthereumServiceProviderConnector
+from cert_issuer.certificate_handlers import CertificateBatchHandler, CertificateBatchWebHandler, CertificateV3Handler, CertificateWebV3Handler
+from cert_issuer.blockchain_handlers.ethereum.connectors import EthereumServiceProviderConnector, MockServiceProviderConnector
 from cert_issuer.blockchain_handlers.ethereum.signer import EthereumSigner
 from cert_issuer.blockchain_handlers.ethereum.transaction_handlers import EthereumTransactionHandler
 from cert_issuer.merkle_tree_generator import MerkleTreeGenerator
@@ -56,23 +56,40 @@ def initialize_signer(app_config):
     return secret_manager
 
 
-def instantiate_blockchain_handlers(app_config):
+def instantiate_blockchain_handlers(app_config, file_mode=True):
     issuing_address = app_config.issuing_address
     chain = app_config.chain
     secret_manager = initialize_signer(app_config)
-    certificate_batch_handler = CertificateBatchHandler(secret_manager=secret_manager,
-                                                        certificate_handler=CertificateV3Handler(),
-                                                        merkle_tree=MerkleTreeGenerator(),
-                                                        config=app_config)
+
+    if file_mode:
+        certificate_batch_handler = CertificateBatchHandler(
+            secret_manager=secret_manager,
+            certificate_handler=CertificateV3Handler(app_config),
+            merkle_tree=MerkleTreeGenerator(),
+            config=app_config
+        )
+    else:
+        certificate_batch_handler = CertificateBatchWebHandler(
+            secret_manager=secret_manager,
+            certificate_handler=CertificateWebV3Handler(app_config),
+            merkle_tree=MerkleTreeGenerator(),
+            config=app_config
+        )
+
     if chain.is_mock_type():
         transaction_handler = MockTransactionHandler()
+        connector = MockServiceProviderConnector()
     # ethereum chains
     elif chain.is_ethereum_type():
         nonce = app_config.nonce
-        cost_constants = EthereumTransactionCostConstants(app_config.max_priority_fee_per_gas, 
-                                                          app_config.gas_price, app_config.gas_limit)
+        cost_constants = EthereumTransactionCostConstants(
+            app_config.max_priority_fee_per_gas,
+            app_config.gas_price,
+            app_config.gas_limit
+        )
         connector = EthereumServiceProviderConnector(chain, app_config)
-        transaction_handler = EthereumTransactionHandler(connector, nonce, cost_constants, secret_manager,
-                                                         issuing_address=issuing_address)
+        transaction_handler = EthereumTransactionHandler(
+            connector, nonce, cost_constants, secret_manager,
+            issuing_address=issuing_address)
 
     return certificate_batch_handler, transaction_handler, connector
