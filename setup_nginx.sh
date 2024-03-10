@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if [ "$ENV" = "dev" ]; then
+if [ "$APP_ENV" = "dev" ]; then
   SERVER_NAME="dev.blockcerts.accredible.com"
-elif [ "$ENV" = "production" ]; then
+elif [ "$APP_ENV" = "production" ]; then
   SERVER_NAME="blockcerts.accredible.com"
 else
   SERVER_NAME="127.0.0.1"
