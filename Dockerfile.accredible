@@ -23,7 +23,8 @@ RUN apt update && apt install -y \
 # Setup Nginx
 ARG APP_ENV
 COPY nginx_conf /etc/nginx/sites-available/cert_issuer
-RUN ln -s /etc/nginx/sites-available/cert_issuer /etc/nginx/sites-enabled/ \
+RUN rm /etc/nginx/sites-enabled/default \
+&& ln -s /etc/nginx/sites-available/cert_issuer /etc/nginx/sites-enabled/ \
 && chmod +x ./setup_nginx.sh && ./setup_nginx.sh
 
 EXPOSE 80
