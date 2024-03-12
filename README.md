@@ -9,7 +9,7 @@
 3. Build the docker image
     - `docker build -t blockcerts-local -f Dockerfile.accredible .`
 4. Run the docker container, hosting the app on port 8080
-    - `docker run -p 8080:80 -d accredible/cert-issuer:latest`
+    - `docker run -p 8080:80 -d blockcerts-local:latest`
 5. Generate test coins for your wallet https://sepolia-faucet.pk910.de
 
 ### Deployment
