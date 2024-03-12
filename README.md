@@ -1,21 +1,22 @@
-[![Verifiable Credential Compliance result](https://badgen.net/badge/Verifiable%20Credentials%20v1/failure/red?icon=https://www.w3.org/Icons/WWW/w3c_home_nb-v.svg)](https://www.blockcerts.org/vc-compliance-report.html)
-[![Build Status](https://travis-ci.org/blockchain-certificates/cert-issuer.svg?branch=master)](https://travis-ci.org/blockchain-certificates/cert-issuer)
-[![PyPI version](https://badge.fury.io/py/cert-issuer.svg)](https://badge.fury.io/py/cert-issuer)
-
 # Accredible Notes
 ### Installation
 1. Copy `conf_ethtest.ini` to a new `conf.ini`, and fill the missing values.
-2. Create `pk_issuer.txt` and add the wallet private key to it `0x...`.
+2. Create `pk_issuer.txt` and add the wallet private key to it.
 3. Build the docker image
     - `docker build -t blockcerts-local -f Dockerfile.accredible .`
 4. Run the docker container, hosting the app on port 8080
     - `docker run -p 8080:80 -d blockcerts-local:latest`
-5. Generate test coins for your wallet https://sepolia-faucet.pk910.de
+5. Access the app locally on `127.0.0.1:8080`
+6. Generate test coins for your wallet https://sepolia-faucet.pk910.de
 
 ### Deployment
 - Deployment images must be built with APP_ENV ARG `--build-arg APP_ENV=dev|production`
 - `docker build -t blockcerts-dev --build-arg APP_ENV=dev -f Dockerfile.accredible .`
 
+---
+[![Verifiable Credential Compliance result](https://badgen.net/badge/Verifiable%20Credentials%20v1/failure/red?icon=https://www.w3.org/Icons/WWW/w3c_home_nb-v.svg)](https://www.blockcerts.org/vc-compliance-report.html)
+[![Build Status](https://travis-ci.org/blockchain-certificates/cert-issuer.svg?branch=master)](https://travis-ci.org/blockchain-certificates/cert-issuer)
+[![PyPI version](https://badge.fury.io/py/cert-issuer.svg)](https://badge.fury.io/py/cert-issuer)
 
 # cert-issuer
 
