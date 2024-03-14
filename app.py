@@ -12,7 +12,7 @@ import cert_issuer.issue_certificates
 
 app = Flask(__name__)
 setup_bugsnag(app)
-setup_logdna(app)
+setup_logdna()
 
 config = None
 

@@ -8,5 +8,5 @@ logdna_handler = LogDNAHandler(key, options={
     'app': 'cert-issuer',
 })
 
-def setup_logdna(app):
-    app.logger.addHandler(logdna_handler)
+def setup_logdna():
+    logging.getLogger().addHandler(logdna_handler)
