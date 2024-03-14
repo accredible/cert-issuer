@@ -16,6 +16,8 @@ RUN apt update && apt install -y \
     wheel \
     uwsgi \
     flask \
+    logdna \
+    bugsnag[flask] \
 && python setup.py experimental --blockchain=ethereum \
 && apt clean \
 && rm -rf /var/lib/apt/lists/*

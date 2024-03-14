@@ -2,11 +2,18 @@
 import json
 from flask import Flask, request
 
+from logdna_config import setup_logdna
+from bugsnag_config import setup_bugsnag
+
 import cert_issuer.config
 from cert_issuer.blockchain_handlers import ethereum
 import cert_issuer.issue_certificates
 
+
 app = Flask(__name__)
+setup_bugsnag(app)
+setup_logdna(app)
+
 config = None
 
 def get_config():
