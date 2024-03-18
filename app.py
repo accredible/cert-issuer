@@ -36,9 +36,10 @@ def issue():
     certificate_batch_handler, transaction_handler, connector = \
             ethereum.instantiate_blockchain_handlers(config, False)
     certificate_batch_handler.set_certificates_in_batch(request.json)
-    txn_id = cert_issuer.issue_certificates.issue(config, certificate_batch_handler, transaction_handler)
+    issue_response = cert_issuer.issue_certificates.issue(config, certificate_batch_handler, transaction_handler)
     response = {
-        "txn_id": txn_id,
+        "txn_id": issue_response['txid'],
+        "nonce": issue_response['nonce'],
         "receipts": certificate_batch_handler.proof
     }
     return json.dumps(response)

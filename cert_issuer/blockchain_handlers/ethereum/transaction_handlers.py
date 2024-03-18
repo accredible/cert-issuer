@@ -70,6 +70,8 @@ class EthereumTransactionHandler(TransactionHandler):
             # it is assumed here that the address has sufficient funds, as the ensure_balance has just been checked
             nonce = self.nonce or self.connector.get_address_nonce(self.issuing_address)
             logging.info("NONCE IS %d", nonce)
+
+            self.nonce = nonce
             # Transactions in the first iteration will be send to burn address
             toaddress = Web3.to_checksum_address('0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead')
             prepared_tx = self.transaction_creator.create_transaction(self.tx_cost_constants, self.issuing_address, nonce,
