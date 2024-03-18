@@ -36,13 +36,22 @@ def issue():
     certificate_batch_handler, transaction_handler, connector = \
             ethereum.instantiate_blockchain_handlers(config, False)
     certificate_batch_handler.set_certificates_in_batch(request.json)
-    issue_response = cert_issuer.issue_certificates.issue(config, certificate_batch_handler, transaction_handler)
+
+    issue_response = cert_issuer.issue_certificates.issue(
+        config,
+        certificate_batch_handler,
+        transaction_handler
+    )
+
+    cost = transaction_handler.tx_cost_constants
     response = {
         "txn_id": issue_response['txid'],
+        "gas_price": cost.get_gas_price(),
+        "gas_limit": cost.get_gas_limit(),
         "nonce": issue_response['nonce'],
         "receipts": certificate_batch_handler.proof
     }
     return json.dumps(response)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5001)
