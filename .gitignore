@@ -35,3 +35,4 @@ site/*
 pk_issuer.txt
 priv*.txt
 pk.txt
+.env
