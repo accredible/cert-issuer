@@ -2,9 +2,21 @@ FROM --platform=linux/amd64 python:3.7-slim
 
 WORKDIR /cert-issuer
 
-COPY conf.ini /etc/cert-issuer/conf.ini
-COPY pk_issuer.txt ./pk_issuer.txt
-COPY . .
+COPY ./app.py \
+    ./setup.py \
+    ./requirements.txt \
+    ./ethereum_requirements.txt \
+    ./wsgi.py \
+    ./wsgi.ini \
+    ./nginx_conf \
+    ./setup_nginx.sh \
+    ./setup_wallet.py \
+    ./setup_logdna.py \
+    ./setup_bugsnag.py \
+    ./README.md \
+    /cert-issuer/
+
+COPY ./cert_issuer /cert-issuer/cert_issuer
 
 RUN apt update && apt install -y \
     gcc \
