@@ -1,7 +1,7 @@
 # Accredible Notes
 ### Installation
 1. Copy `.env.sample` file into `.env`
-1. Set `ISSUING_ADDRESS` and `WALLET_PRIVATE_KEY` keys in your `.env` file and any other needed configs.
+1. Set missing configs in `.env` file.
 1. Build the docker image
     - `docker build -t blockcerts-local -f Dockerfile.accredible .`
 1. Run the docker container, hosting the app on port 8080
