@@ -1,13 +1,13 @@
 # Accredible Notes
 ### Installation
-1. Copy `conf_ethtest.ini` to a new `conf.ini`, and fill the missing values.
-2. Create `pk_issuer.txt` and add the wallet private key to it.
-3. Build the docker image
+1. Copy `.env.sample` file into `.env`
+1. Set `ISSUING_ADDRESS` and `WALLET_PRIVATE_KEY` keys in your `.env` file and any other needed configs.
+1. Build the docker image
     - `docker build -t blockcerts-local -f Dockerfile.accredible .`
-4. Run the docker container, hosting the app on port 8080
-    - `docker run -p 8080:80 -d blockcerts-local:latest`
-5. Access the app locally on `127.0.0.1:8080`
-6. Generate test coins for your wallet https://sepolia-faucet.pk910.de
+1. Run the docker container, hosting the app on port 8080
+    - `docker run -p 8080:80 --env-file .env -d blockcerts-local:latest`
+1. Access the app locally on `127.0.0.1:8080`
+1. Generate test coins for your wallet https://sepolia-faucet.pk910.de
 
 ### Deployment
 - Deployment images must be built with APP_ENV ARG `--build-arg APP_ENV=dev|production`

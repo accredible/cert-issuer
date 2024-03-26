@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 if [ "$APP_ENV" = "dev" ]; then
   SERVER_NAME="dev.blockcerts.accredible.com"
 elif [ "$APP_ENV" = "production" ]; then
