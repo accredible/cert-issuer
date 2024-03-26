@@ -7,6 +7,8 @@ def setup_logdna(app):
     if os.environ['FLASK_ENV'] == 'local':
         return
 
+    logging.info('Setting up LogDNA')
+
     key=os.environ['LOGDNA_INGESTION_KEY']
 
     logdna_handler = LogDNAHandler(key, options={

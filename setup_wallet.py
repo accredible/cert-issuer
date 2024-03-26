@@ -1,7 +1,10 @@
 import os
+import logging
 
 
 def setup_wallet():
+    logging.info('Setting up wallet')
+
     pk_issuer = os.environ.get('WALLET_PRIVATE_KEY')
 
     with open('./pk_issuer.txt', 'w') as f:

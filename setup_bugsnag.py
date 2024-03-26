@@ -1,4 +1,5 @@
 import os
+import logging
 import bugsnag
 from bugsnag.flask import handle_exceptions
 
@@ -6,6 +7,8 @@ from bugsnag.flask import handle_exceptions
 def setup_bugsnag(app):
     if os.environ['FLASK_ENV'] == 'local':
         return
+
+    logging.info('Setting up Bugsnag')
 
     api_key=os.environ['BUGSNAG_API_KEY']
 
