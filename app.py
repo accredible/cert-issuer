@@ -5,6 +5,7 @@ from flask import Flask, request
 from setup_wallet import setup_wallet
 from setup_logdna import setup_logdna
 from setup_bugsnag import setup_bugsnag
+from setup_configs import parse_configs
 
 import cert_issuer.config
 from cert_issuer.blockchain_handlers import ethereum
@@ -12,6 +13,7 @@ import cert_issuer.issue_certificates
 
 
 app = Flask(__name__)
+parse_configs()
 setup_wallet()
 setup_logdna(app)
 setup_bugsnag(app)

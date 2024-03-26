@@ -13,6 +13,7 @@ COPY ./app.py \
     ./setup_wallet.py \
     ./setup_logdna.py \
     ./setup_bugsnag.py \
+    ./setup_configs.py \
     ./README.md \
     /cert-issuer/
 
