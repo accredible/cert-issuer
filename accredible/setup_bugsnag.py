@@ -5,7 +5,7 @@ from bugsnag.flask import handle_exceptions
 
 
 def setup_bugsnag(app):
-    if os.environ['FLASK_ENV'] == 'local':
+    if os.environ['ENV_NAME'] == 'local':
         return
 
     logging.info('Setting up Bugsnag')
@@ -15,7 +15,7 @@ def setup_bugsnag(app):
     bugsnag.configure(
         api_key=api_key,
         project_root='/cert-issuer',
-        release_stage=os.environ['FLASK_ENV'],
+        release_stage=os.environ['ENV_NAME'],
         notify_release_stages=['dev', 'production']
     )
 

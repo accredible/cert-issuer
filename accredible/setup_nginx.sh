@@ -6,6 +6,8 @@ if [ "$APP_ENV" = "dev" ]; then
   SERVER_NAME="dev.blockcerts.accredible.com"
 elif [ "$APP_ENV" = "production" ]; then
   SERVER_NAME="blockcerts.accredible.com"
+elif [ "$APP_ENV" = "eu-production" ]; then
+  SERVER_NAME="eu.blockcerts.accredible.com"
 else
   SERVER_NAME="127.0.0.1"
 fi

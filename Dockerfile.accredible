@@ -9,15 +9,11 @@ COPY ./app.py \
     ./wsgi.py \
     ./wsgi.ini \
     ./nginx_conf \
-    ./setup_nginx.sh \
-    ./setup_wallet.py \
-    ./setup_logdna.py \
-    ./setup_bugsnag.py \
-    ./setup_configs.py \
     ./README.md \
-    /cert-issuer/
+    ./
 
-COPY ./cert_issuer /cert-issuer/cert_issuer
+COPY ./accredible ./accredible/
+COPY ./cert_issuer ./cert_issuer/
 
 RUN apt update && apt install -y \
     gcc \
@@ -40,7 +36,7 @@ ARG APP_ENV
 COPY nginx_conf /etc/nginx/sites-available/cert_issuer
 RUN rm /etc/nginx/sites-enabled/default \
 && ln -s /etc/nginx/sites-available/cert_issuer /etc/nginx/sites-enabled/ \
-&& chmod +x ./setup_nginx.sh && ./setup_nginx.sh
+&& chmod +x ./accredible/setup_nginx.sh && ./accredible/setup_nginx.sh
 
 EXPOSE 80
 

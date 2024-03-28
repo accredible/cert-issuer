@@ -4,7 +4,7 @@ from logdna import LogDNAHandler
 
 
 def setup_logdna(app):
-    if os.environ['FLASK_ENV'] == 'local':
+    if os.environ['ENV_NAME'] == 'local':
         return
 
     logging.info('Setting up LogDNA')
@@ -13,7 +13,7 @@ def setup_logdna(app):
 
     logdna_handler = LogDNAHandler(key, options={
         'app': 'cert-issuer',
-        'env': os.environ['FLASK_ENV']
+        'env': os.environ['ENV_NAME']
     })
 
     app.logger.addHandler(logdna_handler)

@@ -2,10 +2,11 @@
 import json
 from flask import Flask, request
 
-from setup_wallet import setup_wallet
-from setup_logdna import setup_logdna
-from setup_bugsnag import setup_bugsnag
-from setup_configs import parse_configs
+from accredible.setup_wallet import setup_wallet
+from accredible.setup_logdna import setup_logdna
+from accredible.setup_bugsnag import setup_bugsnag
+from accredible.setup_configs import parse_configs
+from accredible.verifier import verify_signature
 
 import cert_issuer.config
 from cert_issuer.blockchain_handlers import ethereum
@@ -36,6 +37,7 @@ def aws_healthcheck():
 
 @app.route('/cert_issuer/api/v1.0/issue', methods=['POST'])
 def issue():
+    verify_signature(request)
     config = get_config()
     certificate_batch_handler, transaction_handler, connector = \
             ethereum.instantiate_blockchain_handlers(config, False)
