@@ -8,7 +8,6 @@ COPY ./app.py \
     ./ethereum_requirements.txt \
     ./wsgi.py \
     ./wsgi.ini \
-    ./nginx_conf \
     ./README.md \
     ./
 
@@ -32,8 +31,8 @@ RUN apt update && apt install -y \
 && rm -rf /var/lib/apt/lists/*
 
 # Setup Nginx
-ARG APP_ENV
-COPY nginx_conf /etc/nginx/sites-available/cert_issuer
+ARG ENV_NAME
+COPY ./nginx_conf /etc/nginx/sites-available/cert_issuer
 RUN rm /etc/nginx/sites-enabled/default \
 && ln -s /etc/nginx/sites-available/cert_issuer /etc/nginx/sites-enabled/ \
 && chmod +x ./accredible/setup_nginx.sh && ./accredible/setup_nginx.sh

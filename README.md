@@ -10,8 +10,8 @@
 1. Generate test coins for your wallet https://sepolia-faucet.pk910.de
 
 ### Deployment
-- Deployment images must be built with APP_ENV ARG `--build-arg APP_ENV=dev|production`
-- `docker build -t blockcerts-dev --build-arg APP_ENV=dev -f Dockerfile.accredible .`
+- Deployment images must be built with ENV_NAME ARG `--build-arg ENV_NAME=dev|production|eu-production`
+- `docker build -t blockcerts-dev --build-arg ENV_NAME=dev -f Dockerfile.accredible .`
 
 ---
 [![Verifiable Credential Compliance result](https://badgen.net/badge/Verifiable%20Credentials%20v1/failure/red?icon=https://www.w3.org/Icons/WWW/w3c_home_nb-v.svg)](https://www.blockcerts.org/vc-compliance-report.html)

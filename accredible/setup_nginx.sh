@@ -2,11 +2,11 @@
 
 set -e
 
-if [ "$APP_ENV" = "dev" ]; then
+if [ "$ENV_NAME" = "dev" ]; then
   SERVER_NAME="dev.blockcerts.accredible.com"
-elif [ "$APP_ENV" = "production" ]; then
+elif [ "$ENV_NAME" = "production" ]; then
   SERVER_NAME="blockcerts.accredible.com"
-elif [ "$APP_ENV" = "eu-production" ]; then
+elif [ "$ENV_NAME" = "eu-production" ]; then
   SERVER_NAME="eu.blockcerts.accredible.com"
 else
   SERVER_NAME="127.0.0.1"
