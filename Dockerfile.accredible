@@ -1,0 +1,43 @@
+FROM --platform=linux/amd64 python:3.12-slim
+
+WORKDIR /cert-issuer
+
+COPY ./app.py \
+    ./setup.py \
+    ./requirements.txt \
+    ./ethereum_requirements.txt \
+    ./wsgi.py \
+    ./wsgi.ini \
+    ./README.md \
+    ./
+
+COPY ./accredible ./accredible/
+COPY ./cert_issuer ./cert_issuer/
+
+RUN apt update && apt install -y \
+    gcc \
+    git \
+    nginx \
+&& python -m ensurepip \
+&& pip install --no-cache-dir --upgrade pip \
+    setuptools \
+    Cython \
+    wheel \
+    uwsgi \
+    flask \
+    logdna \
+    bugsnag[flask] \
+&& python setup.py experimental --blockchain=ethereum \
+&& apt clean \
+&& rm -rf /var/lib/apt/lists/*
+
+# Setup Nginx
+ARG ENV_NAME
+COPY ./nginx_conf /etc/nginx/sites-available/cert_issuer
+RUN rm /etc/nginx/sites-enabled/default \
+&& ln -s /etc/nginx/sites-available/cert_issuer /etc/nginx/sites-enabled/ \
+&& chmod +x ./accredible/setup_nginx.sh && ./accredible/setup_nginx.sh
+
+EXPOSE 80
+
+CMD nginx && uwsgi --ini wsgi.ini

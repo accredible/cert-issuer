@@ -25,9 +25,20 @@ class Issuer:
         for attempt_number in range(0, self.max_retry):
             try:
                 txid = self.transaction_handler.issue_transaction(blockchain_bytes)
+                nonce = None
+
+                # Only applicable for ethereum
+                try:
+                    nonce = self.transaction_handler.nonce
+                except AttributeError:
+                    pass
+
                 self.certificate_batch_handler.finish_batch(txid, chain)
                 logging.info('Broadcast transaction with txid %s', txid)
-                return txid
+                return {
+                    "txid": txid,
+                    "nonce": nonce
+                }
             except BroadcastError:
                 logging.warning(
                     'Failed broadcast reattempts. Trying to recreate transaction. This is attempt number %d',

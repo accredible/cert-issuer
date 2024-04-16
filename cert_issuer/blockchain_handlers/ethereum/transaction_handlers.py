@@ -37,7 +37,7 @@ class EthereumTransactionHandler(TransactionHandler):
         self.nonce = nonce
         self.tx_cost_constants = tx_cost_constants
         self.secret_manager = secret_manager
-        self.issuing_address = Web3.toChecksumAddress(issuing_address)
+        self.issuing_address = Web3.to_checksum_address(issuing_address)
         # input transactions are not needed for Ether
         self.prepared_inputs = prepared_inputs
         self.transaction_creator = transaction_creator
@@ -70,8 +70,10 @@ class EthereumTransactionHandler(TransactionHandler):
             # it is assumed here that the address has sufficient funds, as the ensure_balance has just been checked
             nonce = self.nonce or self.connector.get_address_nonce(self.issuing_address)
             logging.info("NONCE IS %d", nonce)
+
+            self.nonce = nonce
             # Transactions in the first iteration will be send to burn address
-            toaddress = Web3.toChecksumAddress('0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead')
+            toaddress = Web3.to_checksum_address('0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead')
             prepared_tx = self.transaction_creator.create_transaction(self.tx_cost_constants, self.issuing_address, nonce,
                                                              toaddress, blockchain_bytes)
 

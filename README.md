@@ -1,4 +1,20 @@
-[![Verifiable Credential Compliance result](https://badgen.net/badge/Verifiable%20Credentials%20v1/compliant/green?icon=https://www.w3.org/Icons/WWW/w3c_home_nb-v.svg)](https://www.blockcerts.org/vc-compliance-report.html)
+# Accredible Notes
+### Installation
+1. Copy `.env.sample` file into `.env`
+1. Set missing configs in `.env` file.
+1. Build the docker image
+    - `docker build -t blockcerts-local -f Dockerfile.accredible .`
+1. Run the docker container, hosting the app on port 8080
+    - `docker run -p 8080:80 --env-file .env -d blockcerts-local:latest`
+1. Access the app locally on `127.0.0.1:8080`
+1. Generate test coins for your wallet https://sepolia-faucet.pk910.de
+
+### Deployment
+- Deployment images must be built with ENV_NAME ARG `--build-arg ENV_NAME=dev|production|eu-production`
+- `docker build -t blockcerts-dev --build-arg ENV_NAME=dev -f Dockerfile.accredible .`
+
+---
+[![Verifiable Credential Compliance result](https://badgen.net/badge/Verifiable%20Credentials%20v1/failure/red?icon=https://www.w3.org/Icons/WWW/w3c_home_nb-v.svg)](https://www.blockcerts.org/vc-compliance-report.html)
 [![Build Status](https://travis-ci.org/blockchain-certificates/cert-issuer.svg?branch=master)](https://travis-ci.org/blockchain-certificates/cert-issuer)
 [![PyPI version](https://badge.fury.io/py/cert-issuer.svg)](https://badge.fury.io/py/cert-issuer)
 
@@ -334,7 +350,7 @@ This means that cert-issuer can be used to sign with MerkleProof2019 a document 
 Currently, only ordered proofs are supported, which means that the next MerkleProof2019 proof hashes the content of the document
 up until the previous proof.
 
-Depending on the nature of the initial proof, consumers might find themselves confronted to a 
+Depending on the nature of the initial proof, consumers might find themselves confronted to a
 JSONLD dereferencing error when the context is not preloaded by Blockcerts ecosystem.
 
 Please note that this may happen with context documents that are not proof context.
@@ -344,7 +360,7 @@ before issuance.
 
 Consumers will need to use both `--context_urls` and `--context_file_paths` properties at the same time, and values need to be specified in matching order.
 
-The path to the directory where consumers store directory is left at the discretion of said consumer, 
+The path to the directory where consumers store directory is left at the discretion of said consumer,
 but you should know that it will be looked up relative to the execution path (CWD).
 
 ### CLI example

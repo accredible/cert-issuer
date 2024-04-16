@@ -1,7 +1,6 @@
 import logging
 import os
 
-import bitcoin
 import configargparse
 from cert_core import BlockchainType, Chain, chain_to_bitcoin_network, UnknownChainError
 
@@ -151,10 +150,15 @@ def get_config():
     logging.info('This run will try to issue on the %s chain', parsed_config.chain.name)
 
     if parsed_config.chain.blockchain_type == BlockchainType.bitcoin:
+        import bitcoin
+
         bitcoin_chain_for_python_bitcoinlib = parsed_config.chain
         if parsed_config.chain == Chain.bitcoin_regtest:
             bitcoin_chain_for_python_bitcoinlib = Chain.bitcoin_regtest
-        bitcoin.SelectParams(chain_to_bitcoin_network(bitcoin_chain_for_python_bitcoinlib))
+
+        bitcoin.SelectParams(
+            chain_to_bitcoin_network(bitcoin_chain_for_python_bitcoinlib)
+        )
 
     global CONFIG
     CONFIG = parsed_config
